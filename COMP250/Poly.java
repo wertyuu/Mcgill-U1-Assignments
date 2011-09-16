@@ -54,8 +54,8 @@ public class Poly {
         return result;
     }
 
-    public Poly multiply(double multiplier) {
-        return new Poly(1);
+    public Poly multiplyConstant(double multiplier) {
+        return (multiplyPolys(new Poly(new float[] {(float) multiplier})));
     }
 
     public Poly multiplyPolys(Poly mult) {
@@ -64,14 +64,40 @@ public class Poly {
         Poly result = new Poly(m+n);
 
         for (int i = 0; i < (getDegree() + 1); i++) {
+            // we create a new Poly object for every term in instance then add those together to get result
             Poly result2 = new Poly(i + mult.getDegree());
             for (int j = 0; j < (mult.getDegree() + 1); j++) {
+                // for every term in mult we multiply with instance term at i to get corresponding term in temporary result
                 result2.setCoefficient((i + j), (getCoefficient(i) * mult.getCoefficient(j)));
             }
             result = result.add(result2);
         }
 
         return result;
+    }
+
+    public void clean() {
+        for (int i = coefficients.length - 1; i >= 0 ; i--) {
+            if (Math.abs(coefficients[i]) < 0.00000001) {
+                float[] tempCoefficients = new float[coefficients.length - 1];
+                for (int j = 0; j < tempCoefficients.length; j++) {
+                    tempCoefficients[j] = coefficients[j];
+                } 
+                coefficients = tempCoefficients;
+            } 
+            if (Math.abs(coefficients[i - 1]) > 0.00000001) {
+                break;
+            }
+        }
+    }
+
+    public Poly derive() {
+        float[] arrayResult = new float[getDegree()];
+        for (int i = 0; i < arrayResult.length; i++) {
+            arrayResult[i] = getCoefficient(i + 1) * (i + 1);
+        }
+
+        return new Poly(arrayResult);
     }
 
     public void displayPoly () {
@@ -93,9 +119,15 @@ public class Poly {
     }
 
     public static void main(String[] argv) {
-        Poly tester1 = new Poly(new float[] {1,2,3,2});
-        Poly tester2 = new Poly(new float[] {2,1});
+        Poly tester2 = new Poly(new float[] {1,2,3,2});
+        Poly tester1 = new Poly(new float[] {2,1});
+        double aoeu = 2;
+        Poly tester3 = new Poly(new float[] {1,-2,2,3,0,-4,0,0,0});
         
         (tester1.multiplyPolys(tester2)).displayPoly();
+        (tester1.multiplyConstant(aoeu)).displayPoly();
+        tester3.clean();
+        tester3.displayPoly();
+        tester3.derive().displayPoly();
     }
 }
