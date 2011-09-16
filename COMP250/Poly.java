@@ -53,6 +53,26 @@ public class Poly {
 			}
 		return result;
 	}
+
+        public Poly multiply(double multiplier) {
+        
+        }
+
+        public Poly multiplyPolys(Poly mult) {
+           int n = getDegree();
+           int m = mult.getDegree();
+           Poly result = new Poly(m+n);
+
+            for (int i = 0; i < (getDegree() + 1); i++) {
+                Poly result2 = new Poly(i + mult.getDegree());
+                for (int j = 0; j < (mult.getDegree() + 1); j++) {
+                    result2.setCoefficient((i + j), (getCoefficient(i) * mult.getCoefficient(j)));
+                }
+                result = result.add(result2);
+            }
+
+            return result;
+        }
 	
 	public void displayPoly () {
 		for (int i=0; i < coefficients.length; i++)
