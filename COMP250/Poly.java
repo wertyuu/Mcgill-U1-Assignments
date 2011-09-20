@@ -118,6 +118,7 @@ public class Poly {
         return n;
     }
 
+    /*
     public static void main(String[] argv) {
         Poly tester2 = new Poly(new float[] {1,2,3,2});
         Poly tester1 = new Poly(new float[] {2,1});
@@ -130,4 +131,5 @@ public class Poly {
         tester3.displayPoly();
         tester3.derive().displayPoly();
     }
+    */
 }
