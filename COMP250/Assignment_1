@@ -34,7 +34,21 @@
     output: Number of unique elements in the intersection
 
     Algorithm: fixed_intersection(a, n, b, m)
-        intersect <-
+        intersect <- new int[1]
+        count <- 0
+        for i <- 1 to n
+            if search(b,m,a[i])
+                //intersect is of size count
+                if NOT search(intersect, count, a[i] )
+                    if count == intersect.length
+                        intersect2 <- new int[intersect.length*2]
+                        for j <- 1 to intersect.length
+                            intersect2[j] <- intersect[j]
+                        intersect <-intersect2
+                    count <- count + 1
+                    intersect[count] <- a[i]
+        return count
+
 
 
 
@@ -44,5 +58,6 @@
     input: array a of n elements and natural number k
     output: array of elements occuring k times in array a
     
-    Algorithm: k_times_elements(a, n, b, m)
-        
+    Algorithm: k_times_elements(a, n, k)
+        result <- new int[]
+
