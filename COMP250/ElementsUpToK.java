@@ -5,7 +5,7 @@ public class ElementsUpToK{
         //Here the array is declared and initialized
         int[] a = { 1 , 4 , 4 , 3 , 4 , 3 , 5 , 2 , 5 , 1 , 5 };
         
-        int[] e = getDuplicatesK(a,2);
+        int[] e = getDuplicatesK(a,3);
         System.out.println(Arrays.toString(e));
     }
 

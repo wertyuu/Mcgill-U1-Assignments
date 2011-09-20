@@ -51,10 +51,20 @@ public class QuadPoly extends Poly {
         }
     }
 
+    public QuadPoly multiplyConstant2(float a) throws Exception {
+        Poly polyR;
+        if (!QuadPoly.isQuadratic(polyR = super.multiplyConstant(a))) {
+            throw new Exception("Not a Quadratic Polynomial");
+        } else {
+            return QuadPoly.copytoQuadPoly(polyR);
+        }
+    }
+
     public QuadPoly[] factor() throws Exception {
-        float a = getCoefficient(2);
-        float b = getCoefficient(1);
-        float c = getCoefficient(0);
+        float a = 1;
+        float a_factored = getCoefficient(2);
+        float b = getCoefficient(1) / getCoefficient(2);
+        float c = getCoefficient(0) / getCoefficient(2);
         QuadPoly[] result = new QuadPoly[2];
         
         if(((b*b) - (4*a*c)) < 0) {
@@ -69,36 +79,36 @@ public class QuadPoly extends Poly {
             x = new float[] { (-(-b+z)) , (2*a) };
             y = new float[] { (-(-b-z)) , (2*a) };
             
-            System.out.println("x is not before");
-            x = QuadPoly.simplify(x);
-            System.out.println("after");
-            y = QuadPoly.simplify(y);
-            result[0] = new QuadPoly(x);
+            result[0] = new QuadPoly(x).multiplyConstant2(a_factored);
             result[1] = new QuadPoly(y);
             return result;
         }
     }
 
-    private static float[] simplify(float[] a) {
+    private static float[] simplify(float n, float m) {
         float min;
-        if(a[0] > a[1]) min = a[1];
-        else min = a[0];
+        if(Math.abs(n) < Math.abs(m)) {
+            min = n;
+        System.out.println("why is x not going here?"+n+","+m);
+        }
+        else {
+            min = m;
+        }
 
-        for(int i = 2; i < min; i++){
-            System.out.println("BAM      "+ a[0]+","+a[1]+ i);
-            if(Math.abs(a[0]%i) < 0.00000001 && Math.abs(a[1]%i) < 0.000000001){
-                a[0] = a[0] / i;
-                a[1] = a[1] / i;
-                System.out.println("Zing    " +a[0]+" , "+i+"Zoom    "+ a[1]);
+        for(int i = 2; i < Math.abs(min); i++){
+            if(Math.abs(n%i) < 0.00000001 && Math.abs(m%i) < 0.000000001){
+                n = n / i;
+                m = m / i;
                 i = i-1;
             }
         }
-        return a;
+        float[] result = new float[] {n, m};
+        return result;
     }
 
 
     public static void main(String[] argv) throws Exception{
-        QuadPoly p1 = new QuadPoly(new float[] {-1,0,4});
+        QuadPoly p1 = new QuadPoly(new float[] {-2,1,6});
         QuadPoly p2 = new QuadPoly(new float[] {1,2});
         QuadPoly p3 = new QuadPoly(new float[] {4,6,4});
 
