@@ -15,7 +15,7 @@ public class ElementsUpToK{
         for(int i = 0; i < c.length; i++){
             if((getNumDuplicates(c, c[i])) <= k && getNumDuplicates(result, c[i]) == 0){
                 if(i > 0){                              //checking if we are on the first iteration so as to know whether to create a new array
-                    
+                    //Mimics an arraylist
                     int[] tempResult = new int[result.length + 1];
                     for(int n = 0; n < result.length; n++){
                         tempResult[n] = result[n];

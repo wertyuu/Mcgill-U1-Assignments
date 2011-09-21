@@ -64,6 +64,7 @@
         
         for i <- 1 to n
             if occurences(a, n, a[i]) <= k AND occurences(result, count, a[i]) > 0
+                //This is to mimic a list by increasing the size of the array every time it is full
                 if count == result.length
                     result2 <-new int[result.length+1]
                     for j <-1 to result.length
@@ -87,7 +88,7 @@
 (b)
     The occurences subroutine has a running time of O(n)
     The k_times_elements algorithm has a runnig time of O(n^2)
-    In the worse case running time: each iteration is bounded by O(2n),
+    In the worse case running time: each iteration is bounded by O(2n) = O(n),
     because the occurences subroutine is called twice,
     and i is at most n.
 

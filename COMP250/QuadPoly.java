@@ -17,23 +17,16 @@ public class QuadPoly extends Poly {
             throw new Exception("Not a Quadratic Polynomial");
         }
     }
-
-    private static boolean isQuadratic(Poly qPoly) {
-        qPoly.clean();
-        if (qPoly.getDegree() > 2){
-            return false;
-        } else return true;
-    }
-
-    private static QuadPoly copytoQuadPoly(Poly p) throws Exception{
-        QuadPoly result = new QuadPoly(p.getDegree());
-        for(int i = 0; i < p.getDegree() + 1; i++){
-            result.setCoefficient(i, p.getCoefficient(i));
-        }
-        return result;
-    }
-
-    public QuadPoly add(QuadPoly p) throws Exception {
+    
+    /****************************************************************************
+     * By design none of the methods in QuadPolys can return Polys              *
+     * and will throw exceptions if the result is not a Quadratic Polynomial    *
+     * To get Polys from QuadPolys use the methods in the Poly class            *
+     * The methods uses the methods from the super class and checks whether the *
+     * result is a QuadPoly.                                                    *
+     ****************************************************************************
+     * */
+    public QuadPoly addQuadPolys(QuadPoly p) throws Exception {
         Poly polyR;
         if (!QuadPoly.isQuadratic(polyR = super.add(p))) {
             throw new Exception("Not a Quadratic Polynomial");
@@ -42,7 +35,7 @@ public class QuadPoly extends Poly {
         }
     }
 
-    public QuadPoly multiplyPolys(QuadPoly p) throws Exception {
+    public QuadPoly multiplyQuadPolys(QuadPoly p) throws Exception {
         Poly polyR;
         if (!QuadPoly.isQuadratic(polyR = super.multiplyPolys(p))){
             throw new Exception("Not a Quadratic Polynomial");
@@ -60,6 +53,11 @@ public class QuadPoly extends Poly {
         }
     }
 
+    /*
+     * Does not do integer factorization as recommended by Prof Precup
+     * It factors out the leading coefficient and uses the formula to get real roots
+     * and multiplies the leading coefficient back in one of the QuadPolys.
+     * */
     public QuadPoly[] factor() throws Exception {
         float a = 1;
         float a_factored = getCoefficient(2);
@@ -84,14 +82,29 @@ public class QuadPoly extends Poly {
             return result;
         }
     }
+    
+    /*Helper methods*/
+    private static boolean isQuadratic(Poly qPoly) {
+        qPoly.clean();
+        if (qPoly.getDegree() > 2){
+            return false;
+        } else return true;
+    }
 
-
+    private static QuadPoly copytoQuadPoly(Poly p) throws Exception{
+        QuadPoly result = new QuadPoly(p.getDegree());
+        for(int i = 0; i < p.getDegree() + 1; i++){
+            result.setCoefficient(i, p.getCoefficient(i));
+        }
+        return result;
+    }
+    /*
     public static void main(String[] argv) throws Exception{
         QuadPoly p1 = new QuadPoly(new float[] {-2,1,6});
         QuadPoly p2 = new QuadPoly(new float[] {1,2});
         QuadPoly p3 = new QuadPoly(new float[] {4,6,4});
 
-        p1.add(p2).displayPoly();
+        p1.addQuadPolys(p2).displayPoly();
         //p1.multiplyPolys(p2).displayPoly();
         QuadPoly[] p4 = p3.factor();
         
@@ -104,4 +117,5 @@ public class QuadPoly extends Poly {
         bam[0].displayPoly();
         bam[1].displayPoly();
     }
+    */
 }
