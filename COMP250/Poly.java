@@ -26,15 +26,17 @@ public class Poly {
         return coefficients.length-1;
     }
 
-    public float getCoefficient(int i) {
-        return coefficients[i];
+    public float getCoefficient(int i) throws Exception{
+        if (i >= coefficients.length)
+            throw new Exception("Bad Poly");
+            return coefficients[i];
     }
 
     public void setCoefficient(int i, float value) {
         coefficients[i] = value;
     }
 
-    public Poly add(Poly p) {
+    public Poly add(Poly p) throws Exception {
         int n = getDegree();
         int m = p.getDegree();
         Poly result = new Poly(Poly.max(n, m));
@@ -54,11 +56,11 @@ public class Poly {
         return result;
     }
 
-    public Poly multiplyConstant(double multiplier) {
+    public Poly multiplyConstant(double multiplier) throws Exception {
         return (multiplyPolys(new Poly(new float[] {(float) multiplier})));
     }
 
-    public Poly multiplyPolys(Poly mult) {
+    public Poly multiplyPolys(Poly mult) throws Exception {
         int n = getDegree();
         int m = mult.getDegree();
         Poly result = new Poly(m+n);
@@ -91,7 +93,7 @@ public class Poly {
         }
     }
 
-    public Poly derive() {
+    public Poly derive() throws Exception {
         float[] arrayResult = new float[getDegree()];
         for (int i = 0; i < arrayResult.length; i++) {
             arrayResult[i] = getCoefficient(i + 1) * (i + 1);

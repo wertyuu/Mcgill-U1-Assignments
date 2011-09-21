@@ -85,27 +85,6 @@ public class QuadPoly extends Poly {
         }
     }
 
-    private static float[] simplify(float n, float m) {
-        float min;
-        if(Math.abs(n) < Math.abs(m)) {
-            min = n;
-        System.out.println("why is x not going here?"+n+","+m);
-        }
-        else {
-            min = m;
-        }
-
-        for(int i = 2; i < Math.abs(min); i++){
-            if(Math.abs(n%i) < 0.00000001 && Math.abs(m%i) < 0.000000001){
-                n = n / i;
-                m = m / i;
-                i = i-1;
-            }
-        }
-        float[] result = new float[] {n, m};
-        return result;
-    }
-
 
     public static void main(String[] argv) throws Exception{
         QuadPoly p1 = new QuadPoly(new float[] {-2,1,6});

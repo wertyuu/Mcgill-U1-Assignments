@@ -100,3 +100,8 @@
     for the clean method, the worse case running time is O(n^2)
 
     For the derive method, the worse case running time is O(n)
+
+4
+(c)
+    The factorization method has a worse case running time of O(1). This is 
+    because there is no loop and no matter the input the running time will remain constant and does not grow.
