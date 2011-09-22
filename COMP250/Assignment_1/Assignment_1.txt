@@ -106,3 +106,5 @@
 (c)
     The factorization method has a worse case running time of O(1). This is 
     because there is no loop and no matter the input the running time will remain constant and does not grow.
+
+
