@@ -55,9 +55,10 @@ public class QuadPoly extends Poly {
     }
 
     /************************************************************************************
-     * Does not do integer factorization as recommended by Prof Precup                  *
+     * Does not do integer factorization.                                               *
      * It factors out the leading coefficient and uses the formula to get real roots    *
      * and multiplies the leading coefficient back in one of the QuadPolys.             *
+     * As recommended by Prof Precup                                                    *
      * **********************************************************************************
      * */
     public QuadPoly[] factor() throws Exception {
