@@ -230,6 +230,10 @@ ID: 260447938
         NOR(NOR(A,A) , NOR(B,B)) = AND(A,B)
 
     2
-        convert A*B*C_ + A*B_*C + A_*B*C from disjunctive normal form to conjunctive normal form.
+        convert A ^ B ^ C' + A ^ B' ^ C + A' ^ B ^ C from disjunctive normal form to conjunctive normal form.
+
+
+
+
         
 
