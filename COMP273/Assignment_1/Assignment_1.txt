@@ -144,7 +144,7 @@ ID: 260447938
 2
 
     1
-        Convert 3.141592653 single precision floating point
+        Represent 3.141592653 as a single precision floating point
         
         3.141592653 =11.00100100001111110110101 = 1.10010010000111111011010 1010000101 * 2^1
 
@@ -183,13 +183,53 @@ ID: 260447938
 
         S   Exponent(8)     Fraction(23)
         0   10000000        10010010000111111011010
-        0   80              490FDA
+
+        0100 0000 0100 1001 0000 1111 1101 1010b = 40490FDA in hex
+
+        The representation is not exact since the fractional part of the decimal number was already much larger than 23 bit without the 2 bits from the integer part.
         
+    2
+        Represent 1.0 * 10^-15 as a single precision floating point
+
+        1.0 * 10^-15    = 2^n
+        10^-15          = 2^n
+        log2 10^-15     = log2 2^n
+        -15 * log2 10   = n * log2 2
+        n               = -15 * (log10 10 / log10 2)
+                        = -15 * (3.3219280948873623478)
+                        = -49.828921423310435218054
+                        = -50 (rounded)
         
+        1.0 * 10^-15 = (1.0 * 2^-50)b
+
+        Exponent
+        X - 127 = -50
+        X       = 77
+
+        sign = 0
+        Fraction = 00000000000000000000000
+        Exponent = 77 = 1001101
+
+        S   Exponent(8)     Fraction(23)
+        0   01001101        00000000000000000000000
+
+        0010 0110 1000 0000 0000 0000 0000 0000b = 26800000 in hex
         
+        ######################################################
+        #Reference:                                          #
+        #S   Exponent(8)     Fraction(23)        Bias 127    #
+        #S   Exponent(11)    Fraction(52)        Bias 1023   #
+        ######################################################
+
+3
+    1
+        Prove that NOR is universal.
         
-        Reference:
-        S   Exponent(8)     Fraction(23)        Bias 127
-        S   Exponent(11)    Fraction(52)        Bias 1023
+        NOR(A,A) = NOT(A)
+        NOR(NOR(A , B) , NOR(A,B)) = OR(A,B)
+        NOR(NOR(A,A) , NOR(B,B)) = AND(A,B)
+
+    2
+        convert A*B*C_ + A*B_*C + A_*B*C from disjunctive normal form to conjunctive normal form.
         
-  
+
