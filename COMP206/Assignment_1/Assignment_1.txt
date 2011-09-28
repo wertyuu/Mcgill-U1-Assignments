@@ -1,0 +1,8 @@
+Jonathan D. Fokkan
+ID: 260447938
+Assignment 1
+COMP206
+
+Question 1
+    The string exists as binary bits that are interpreted as characters in a character set. The application sends the string to the OS through it's api. The OS uses it's kernel to send the the data to the network card through the firmware. The firmware has an api that allows this communication. The network card formats the bits into packets that are sent on a defined protocol such UDP or TCP.
+
