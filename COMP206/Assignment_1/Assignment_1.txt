@@ -1,0 +1,4 @@
+The discussion shows that software are not made from scratch as much anymore and
+that any software that uses a getChar is a software system that is made up of many 
+other programs. It also demonstrates the idea of encapsulation in software systems 
+as a means of abstraction.
