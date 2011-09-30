@@ -47,7 +47,7 @@ ID: 260447938
         0.875*2 = 1.75              1
         0.75*2 = 1.5                1
         0.5*2 = 1                   1 LSb
-        0.AF = 10101111 in binary
+        0.AF = 0.10101111 in binary
 
     5
         Convert 12648430
@@ -123,20 +123,7 @@ ID: 260447938
         
         -123 = 10000101 in 2's complement format
 
-        if {
-            -N = B^n - N
-
-            123/16 = 7      R=11=B
-            7/16 = 0        R=7
-
-            123 = 7B in hex
-
-            16^8 = 4294967296 = 100000000 in hex
-
-            -N = 100000000 - 7B = FFFFFF85 in 16's complement format
-        } else {
-            -123= 85 in hex of 2's complement format
-        }
+        -123= 85 in hex of 2's complement format
         
 
 
@@ -230,7 +217,9 @@ ID: 260447938
         NOR(NOR(A,A) , NOR(B,B)) = AND(A,B)
 
     2
-        convert A ^ B ^ C' + A ^ B' ^ C + A' ^ B ^ C from disjunctive normal form to conjunctive normal form.
+        convert A ^ B ^ C' + A ^ B' ^ C + A' ^ B ^ C from sum of products to products of sum.
+
+        ((A' + B' + C) ^ (A' + B + C') ^ (A + B' + C'))'
 
 
 
