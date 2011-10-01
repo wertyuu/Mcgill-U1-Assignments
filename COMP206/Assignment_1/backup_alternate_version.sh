@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ $# == 0 ]; then
-    cp * ../backup
+    cp -r * ../backup
     rm ../backup/backup.sh
 else
     while (($#)) ; do
