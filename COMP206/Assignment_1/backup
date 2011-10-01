@@ -3,12 +3,12 @@
 # This script takes one argument and backs up files matching to argument to backup directory
 # This script works on the assupmtion of working from the ~/comp206/project/source directory
 
-pwd
-
 if [ $# == 0 ];then
     cp -r *  ~/comp206/project/backup/
     rm ~/comp206/project/backup/backup
 else
-    cp $1 ~/comp206/project/backup/
+    for var in $*
+    do
+    cp $var ~/comp206/project/backup/
+done
 fi
-
