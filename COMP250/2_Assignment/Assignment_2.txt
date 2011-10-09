@@ -123,4 +123,15 @@ Q2
             Since the basis and induction step have been proven, the statement in S(n) holds for all n.
 
 Q3
-    
+    (b)
+        T(n) = 2T(n/2) + Cn
+             = 2[2T(n/4) + Cn/2]
+             .
+             .
+             .
+        Kth  = 2^k·T(n/2^k) + kCn
+
+        k~log₂n= 2^log₂n · T(1) + C(log₂n)n
+               = n·c' + C·nlog₂n
+
+        O(nlog₂n)
