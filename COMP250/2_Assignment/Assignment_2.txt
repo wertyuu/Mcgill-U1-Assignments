@@ -1,0 +1,126 @@
+COMP 250 Assignment
+
+Jonathan D. Fokkan
+ID: 260447938
+8th October 2011
+
+Q1
+    (a)
+        The lower bound running time for any algorithm solving this problem is O(n). 
+        This is because the algorithm has to go through the array a, of size n, at 
+        least once so as not to leave any space for an adversary to put a divisible
+        value where we did not look.
+
+    (b)
+        Algorithm: kdivisible(a, n, k)
+        input: array a of size n and number k.
+        output: number of integers divisible by k in array a.
+
+        return kdivisible_rec(a,n,n,k)
+        
+        Algorithm: kdivisible_rec(a,n,i,k)
+        input: array of size n, index to look at and k
+        output: the number of integers divisible by k in array a before the index i
+
+        if i == 0
+            return 0
+        else
+            if (a[i] % k) == 0
+                return 1 + kdivisible_rec(a, n, i-1, k)
+            else
+                return 0 + kdivisible_rec(a,n, i-1, k)
+
+    (c)
+        Correctness of kdivisible_rec
+        We want to show that for i <= n, the algorithm will always return the number 
+        of integers divisible by k in array a before the index i.
+
+        The algorithm stops after a finite number of steps. i goes to zero where it stops. 
+        In S(m), m is used as a placeholder for i.
+
+        In the base case S(0) of i being 0, there is no integer to look at, so 
+        the number of integers divisible by k is 0.Therefore the base case is correct.
+
+        For the induction step, we suppose that at S(m) kdivisible_rec will correctly
+        return the number of integers divisible by k in an array of size n for all elements
+        before i.
+        If m >= n S(m + 1) this value will never be reached since it will be out of bounds of the 
+        array. This is surely true, given the any statement of the form "If A then B", where A is false
+        is always true.
+        Assuming m < n, 
+            if a[i] is divisible by k it will return 1 added to the recursion of kdivisible_rec with 
+            index i-1. by the induction hypothesis these calls will correctly return the number of 
+            elements divisible by k.
+
+            similarly for if a[i] in not divisible by k, it will return 0 addet to the recursion of
+            kdivisible_rec.
+
+        We can conclude that kdivisible_rec will return the number of integers divisible by k in an 
+        array a of size n if the index i is set to n.
+
+    (d)
+        T(n) = T(n - 1)+C
+             = [T((n-1)-1)+C]+C
+             .
+             .              /*This continues until n = 0*/
+             .
+
+        kth  = T(n-k) + kC
+        iteration 
+
+        T(n) = nC
+
+        The stopping condition reaches when k = n.
+
+        The algorithm has a running time of O(n).
+Q2
+    (a)
+        Prove that n^3 + (n+1)^3 + (n+2)^3 is divisible by 3 for all n
+
+        Basis: S(0): n = 0
+            0^3 + (0+1)^3 + (0+2)^3 = 1 + 8 = 9 is divisible by 3
+
+        Induction step:
+            Assume S(n): n^3 + (n+1)^3 + (n+2)^3 is divisible by 3
+
+            S(n+1):
+
+            (n+1)^3 + ((n+1)+1)^3 + ((n+1)+2)^3 = (n+1)^3 + ((n+1)+1)^3 + ((n+2)+1)^3
+                                                = n^3 + 3n^2 + 3n + 1 + (n+1)^3 + 3(n+1)^2 + 3(n+1)+1 + (n+2)^3 + 3(n+2)^2 + 3(n+2) + 1
+                                                = [n^3 + (n+1)^3 + (n+2)^3] + 3n^2 + 3n + 1 + 3(n+1)^2 + 3(n+1)+ 1 + 3(n+2)^2 + 3(n+2) + 1
+                                                = [n^3 + (n+1)^3 + (n+2)^3] + 3n^2 + 3n +  3(n+1)^2 + 3(n+1) + 3(n+2)^2 + 3(n+2) + 3
+                                                = [n^3 + (n+1)^3 + (n+2)^3] + 3[n^2 + n + (n+1)^2 + (n+1) + (n+2)^2 + (n+2) + 1]
+
+            By the induction hypothesis [n^3 + (n+1)^3 + (n+2)^3] is divisible by 3. 
+            The 3[n^2 + n + (n+1)^2 + (n+1) + (n+2)^2 + (n+2) + 1] is divisible by 3. Their sum 
+            is therefore divisible by 3.
+
+            Since the basis and inductive step have been proven, the statement in S(n) holds for all n
+
+    (b)
+        Prove ∑ [n, i=1] fi^2 = fn·fn+1
+
+        Basis: S(0): 
+            f1^2 = f1·f2
+                 = 1·1
+                 = 1 = 1²
+
+        Inductive step:
+            Assume S(n): ∑ [n, i=1] fi^2 = fn·fn+1
+
+            S(n+1):
+
+            ∑ [n+1, i=1] fi^2 = fn+1·fn+2
+
+            ∑ [n+1, i=1] fi^2 = f1²+...+fn²+fn+1²
+            
+            by the induction hypothesis
+                              
+                              = fn·fn+1 + fn+1²
+                              = fn+1 · ( fn + fn+1 )
+            by def            = fn+1 · ( fn+2 )
+
+            Since the basis and induction step have been proven, the statement in S(n) holds for all n.
+
+Q3
+    
