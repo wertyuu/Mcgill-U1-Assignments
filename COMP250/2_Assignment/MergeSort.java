@@ -6,7 +6,7 @@ public class MergeSort {
     }
     
     static void mergesort (Comparable[] a, int i, int j) {
-	System.out.println("Calling with " + i + " " + j);
+	//System.out.println("Calling with " + i + " " + j);
 	if (j-i < 1) return;
 	int mid = (i+j)/2;
 	mergesort(a, i, mid);
@@ -15,7 +15,7 @@ public class MergeSort {
     }
 
     static void merge(Comparable[] a, int p, int mid, int q) {
-	System.out.println("Calling merge with " + p + " " + mid + " " + q);
+	//System.out.println("Calling merge with " + p + " " + mid + " " + q);
 	Comparable[] tmp = new Comparable[q-p+1];
 	int i = p; 
 	int j = mid+1;
