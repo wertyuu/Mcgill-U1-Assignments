@@ -31,31 +31,30 @@ public class LongestSubsequence {
                 }
 
                 if(broken && breakPoint > m) {
-                    return Math.max(i + LndS(a,m+1,breakPoint) , LndS(a,breakPoint, q) );
+                    return Math.max(i + LndS(a,m+1,breakPoint) , LndS(a,breakPoint+1, q) );
                 } else if (broken && breakPoint < m){
                     int breakPoint2 = 0;
-                    boolean brokenAfterM = false;
+                    boolean broken2 = false;
 
-                    for(int x = m + 1; x < q; x++){
+                    for(int x = breakPoint; x < q; x++){
                         if(a[x]>a[x+1]) {
                             breakPoint2 = x;
-                            brokenAfterM = true;
+                            broken2 = true;
                             break;
                         }
                     }
 
-                    if(brokenAfterM){
-                        return Math.max((LndS(a,breakPoint,m)+LndS(a,m,breakPoint2)),(LndS(a,breakPoint2+1,q)));
-                    } else if(!brokenAfterM){
+                    if(broken2){
+                        return Math.max(LndS(a,p,breakPoint),Math.max((LndS(a,breakPoint,breakPoint2)),(LndS(a,breakPoint2+1,q))));
+                    } else if(!broken2){
                         return LndS(a,breakPoint, m) + j;
                     }
 
                 } else if (!broken) {
                     return i+j;
                 }
-            }/* else if(a[m] > a[m+1]){
-                return Math.max(i,j);
-            }*/else {
+            
+            } else {
                 return Math.max(i,j);
             }
         }
@@ -66,7 +65,7 @@ public class LongestSubsequence {
     public static void main (String[] args) {
 	// here you should declare and initialize an array, and run your 
 	// method on it to check it.
-        int[] a = new int[] {1,2,3,4,3,4,4,5,6,3,7,8,9,10,11};
+        int[] a = new int[] {1,2,3,4,4,4,5,6,3,7,8,9,10,11};
 
         System.out.println("Array:"+Arrays.toString(a));
 
