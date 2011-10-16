@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# This script works on the assumption of working from the source directory
+
 
 if [ $# == 0 ] || [ $1 != '-o' ];then
     echo -e "\nerror: expected first argument -o\n"
