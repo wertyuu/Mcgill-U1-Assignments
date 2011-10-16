@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void getInputUser(void);
 
 char Matrix[50][50];
 
 int main(void)
 {
-    printf("MAIN MENU\n");
+    printf("\nMAIN MENU\n");
     printf("=========\n");
     printf("1. Input text\n2. Encrypt\n3. Decrypt\n4. Exit\nSelection: ");
 

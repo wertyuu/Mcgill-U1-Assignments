@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# This script takes files as argument and backs up files matching to 
+# argument to backup directory. No arguments backs up everything
+# This script works on the assupmtion of working
+# from the ~/comp206/project/source directory
+
+if [ $# == 0 ];then
+    cp -r *  ~/comp206/project/backup/
+    rm ~/comp206/project/backup/backup
+else
+    for var in $*
+    do
+    cp $var ~/comp206/project/backup/
+done
+fi
