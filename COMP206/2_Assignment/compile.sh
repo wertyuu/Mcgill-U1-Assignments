@@ -13,7 +13,6 @@ if [ $# == 0 ] || [ $1 != '-o' ];then
     echo -e "EXAMPLE:\n"
     echo -e "\tcompile -o myFile -clean -backup -archive -help f1.c f2.c f3.c\n"
 else
-    #sets a hard limit to how many c files to 20
     index=0
     for var in $*
     do
@@ -24,7 +23,10 @@ else
             cp *.c ../backup
             cp *.h ../backup;;
         '-archive')
-            tar -cvzf ../backup/`date +"%m-%d-%y"`.tar.gz *;;
+            # filename of the tar archive is the date
+            # overriden by assignment instruction
+            # tar -cvzf ../backup/`date +"%m-%d-%y"`.tar.gz *;;
+            tar -cvzf ../backup/$2.tar.gz *;;
         '-help')
             echo -e "\nUSAGE: compile -o filename [-clean] [-backup] [-archive] [-help] cfilenames\n"
             echo -e "DESCRIPTION:\n"
@@ -43,15 +45,4 @@ else
     done
 
     gcc -o $2 ${cfile[*]}
-
-        #if [ $var = '-clean' ];then
-        #    rm *.o
-        #fi
-        #if [ $var = '-backup' ];then
-        #    cp *.c ../backup
-        #    cp *.h ../backup
-        #fi
-        #if [ $var = '-archive' ];then
-        #fi
-
 fi
