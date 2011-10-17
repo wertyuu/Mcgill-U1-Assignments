@@ -40,11 +40,11 @@ else
             echo -e "\tcfilenames, \toptional argument. Source files to be compiled.\n"
             echo -e "EXAMPLE:\n"
             echo -e "\tcompile -o myFile -clean -backup -archive -help f1.c f2.c f3.c\n";;
-        '*.c')
+        *.c)
             cfiles[$index]=$var
             index=`expr $index + 1`;;
         esac
     done
 
-    gcc -o $2 ${cfile[*]}
+    gcc -o $2 ${cfiles[*]}
 fi
