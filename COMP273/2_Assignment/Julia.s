@@ -65,7 +65,7 @@ juliaiterations:
     add.s $f26, $f26, $f28
 
     l.s $f28, million
-    c.lt.s $f28, $f26
+    c.le.s $f28, $f26
     lwc1 $f26, 0($sp)
     lwc1 $f28, 4($sp)
     add $sp, $sp, 8
