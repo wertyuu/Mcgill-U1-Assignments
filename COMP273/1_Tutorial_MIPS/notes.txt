@@ -1,0 +1,1 @@
+Start your Mips assemble code with either main or _start
