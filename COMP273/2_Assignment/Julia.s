@@ -1,4 +1,4 @@
-    #.globl main
+    .globl main
 main:
     # input
     ## value of a
