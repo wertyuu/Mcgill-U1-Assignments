@@ -4,7 +4,7 @@ main:
     li $t0, 0
     
     # load b into $f6
-    l.s $f6, b
+    l.s $f6, b_
 
     # load increment of a into $f16
     l.s $f16, a_inc
@@ -122,8 +122,8 @@ newline: .asciiz "\n"
 space: .asciiz " "
 million: .float 1000000.0
 two: .float 2.0
-a: .float -2
-b: .float 1.5
+a: .float -2.0
+b_: .float 1.5
 a_inc: .float 0.0375
 b_dec: .float 0.075
-zero: .float 0
+zero: .float 0.0

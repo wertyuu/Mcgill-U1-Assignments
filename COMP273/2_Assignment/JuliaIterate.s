@@ -1,5 +1,5 @@
-    .globl  Main
-Main:
+    .globl main
+main:
     # input section
     ## value of a
     li $v0, 4 
