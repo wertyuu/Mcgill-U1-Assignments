@@ -1,3 +1,10 @@
+# Jonathan Fok kan
+# 260447938
+# Assignment 3 MIPS
+# Question 1
+# Part 1
+
+
     .globl main
 main:
     # input section

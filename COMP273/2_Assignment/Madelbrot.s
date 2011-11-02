@@ -1,3 +1,9 @@
+# Jonathan Fok kan
+# 260447938
+# Assignment 3 MIPS
+# Question 2
+
+
     .globl main
 main:
     # set outerloop counter as $t0
