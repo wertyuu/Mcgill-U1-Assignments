@@ -120,8 +120,8 @@ outerloopdone:
     .data
 newline: .asciiz "\n"
 space: .asciiz " "
-million: .float 1000000
-two: .float 2
+million: .float 1000000.0
+two: .float 2.0
 a: .float -2
 b: .float 1.5
 a_inc: .float 0.0375

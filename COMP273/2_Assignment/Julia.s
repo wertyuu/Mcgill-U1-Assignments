@@ -1,5 +1,5 @@
-    .globl main
-main:
+    .globl Main
+Main:
     # input
     ## value of a
     li $v0, 4 
@@ -141,8 +141,8 @@ aPrompt: .asciiz "Enter the value of a: "
 bPrompt: .asciiz "Enter the value of b: "
 newline: .asciiz "\n"
 space: .asciiz " "
-million: .float 1000000
-two: .float 2
+million: .float 1000000.0
+two: .float 2.0
 x: .float -2.0
 x_inc: .float 0.05
 y: .float 2.0

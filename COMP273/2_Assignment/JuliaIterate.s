@@ -1,5 +1,5 @@
-    .globl  main
-main:
+    .globl  Main
+Main:
     # input section
     ## value of a
     li $v0, 4 
@@ -145,7 +145,7 @@ xPrompt: .asciiz "Enter the value of x0: "
 yPrompt: .asciiz "Enter the value of y0: "
 nPrompt: .asciiz "Enter the number of iterations n: "
 newline: .asciiz "\n"
-two: .float 2
+two: .float 2.0
 lbasecase: .asciiz "(x0, y0) = ("
 rBraq: .asciiz "(x"
 comma: .asciiz ", "
