@@ -6,16 +6,19 @@ import java.util.LinkedList;
  * ************************************************************************/
 
 public class FlightSimulator {
-    LinkedList<Airplane> takingoff = new LinkedList<Airplane>();
-    LinkedList<Airplane> landing = new LinkedList<Airplane>();
+    Queue<Airplane> takingOff;
+    Queue<Airplane> landing;
     
+    public FlightSimulator() {
+        takingOff = new LinkedList<Airplane>()
+        landing = new LinkedList<Airplane>();
+    }
     public Airplane takeOff() {
         // returns null in case of the takingoff queue is empty
 
         if( landing.peek() == null ) {
-            return takingoff.poll();
+            return takingOff.poll();
         } else {
-            // not correctly implemented ASK FOR CLARIFICATION
             return null;
         }
     }
@@ -26,13 +29,12 @@ public class FlightSimulator {
     }
     
 
-    // CLARIFICATION REQUIRED ON WHAT THOSE METHODS DO
-    public void requestTakeOff() {
-    
+    public void requestTakeOff(Airplane newPlane) {
+        takingOff.offer(newPlane);
     }
 
-    public void requestLand() {
-    
+    public void requestLand(Airplane newPlane) {
+        landing.offer(newPlane)
     }
 
 }
