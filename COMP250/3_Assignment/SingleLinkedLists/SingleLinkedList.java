@@ -22,7 +22,7 @@ public class SingleLinkedList {
 	if ( head == null ) throw new EmptyListException();
         
         // If the element does not exist throw exception
-        if ( head.content.equals(o) || find(o) ) {
+        if ( head.content.equals(o) || !find(o) ) {
             throw new NoSuchElementException();
         }
         
@@ -34,7 +34,9 @@ public class SingleLinkedList {
         Node prevprevCurrent = head;
         Node prevCurrent = head.next;
         Node current = head.next.next;
+
         while ( !current.content.equals(o) ) {
+            prevprevCurrent = prevprevCurrent.next;
             prevCurrent = prevCurrent.next;
             current = current.next;
         }
@@ -51,22 +53,20 @@ public class SingleLinkedList {
 	if ( head == null ) throw new EmptyListException();
         
         // If the element does not exist throw exception
-        if ( find(o) ) {
+        if ( !find(o) ) {
             throw new NoSuchElementException();
         }
         
         Node current = head;
         while (!current.content.equals(o)) {
             current = current.next;
-            if ( current.next.next == null && current.next.content.equals(o) ) {
+            if ( current.content.equals(o) && current.next == null  ) {
                 throw new NoSuchElementException();
             }
         }
         
         Object resulting = current.next.content;
         current.next = current.next.next;
-        current.next.next = null;
-        current.next.content = null;
         
         return resulting;
     }

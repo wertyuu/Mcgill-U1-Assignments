@@ -23,21 +23,23 @@ public class DoubleLinkedList {
         
 	if (head == null) throw new EmptyListException();
 	
-        if ( head.content.equals(o) || find(o) ) throw new NoSuchElementException();
+        // If the element does not exist throw exception
+        if ( head.content.equals(o) || !find(o) ) throw new NoSuchElementException();
 
-        Node crt = head.next;
+        // If the object matches the second element cut the head off
+        if ( head.next.content.equals(o) ) {
+            return removeFirst();
+        }
 
-        while (!crt.content.equals(o)) {
+        Node crt = head.next.next;
+
+        while ( !crt.content.equals(o) ) {
             crt = crt.next;
         }
 
         Object result = crt.prev.content;
-        crt.prev = crt.prev.prev;
         crt.prev.prev.next = crt;
-        crt.prev.next = null;
-        crt.prev.prev = null;
-        crt.prev.content = null;
-
+        crt.prev = crt.prev.prev;
         return result;
 
     }
@@ -46,21 +48,22 @@ public class DoubleLinkedList {
         
 	if (head == null) throw new EmptyListException();
 	
-        if ( tail.content.equals(o) || find(o) ) throw new NoSuchElementException();
+        if ( tail.content.equals(o) || !find(o) ) throw new NoSuchElementException();
 
-        Node crt = head.next;
+        // If the element matches the element before tail. RemoveLast.
+        if ( tail.prev.content.equals(o) ) {
+            return removeLast();
+        }
 
-        while (!crt.content.equals(o)) {
+        Node crt = head;
+
+        while ( !crt.content.equals(o) ) {
             crt = crt.next;
         }
 
         Object result = crt.next.content;
+        crt.next.next.prev = crt;
         crt.next = crt.next.next;
-        crt.next.next = crt;
-        crt.next.next = null;
-        crt.next.prev = null;
-        crt.next.content = null;
-
         return result;
     }
 
