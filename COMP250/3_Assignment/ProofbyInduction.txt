@@ -2,7 +2,14 @@ Jonathan Fokkan
 260447938
 COMP250
 Assignment 3
-Question 2
+Question 1 (c) & 2
+1.
+    (c)
+        The queue would not be fair in terms of balancing waiting times for planes in the various queues.
+        A plane waiting to take off could wait longer than a plane attempting to land. Since there is nothing 
+        special about a plane landing compared to one taking off in this example, they should try to wait for approximately
+        equal lengths. A better data structure for such a situation would be priority queues where priority is based upon time
+        of request to land or take off and some other environmental factor if need be.
 
 2.
     (a)
@@ -34,6 +41,18 @@ Question 2
         N = 2^(d+1)-1 + 2^(d+1) -1 = 2^(d + 2) - 2
 
         Proof for the maximum:
+        Base Case:
+        Depth 1:
+        N = infinity
+
+        Induction Step:
+        Assume that the max of such a tree at depth d is infitite.
+
+        for a tree at depth d+1:
+        the Max of this tree would be the sum of max of its subtrees plus the root.
+        The max of it's roots is infinite by the induction hypothesis.
+        There the max of this tree is infinite.
+
 
 
 

@@ -28,12 +28,23 @@ public class FlightSimulator {
         return landing.poll();
     }
     
-
-    public void requestTakeOff(Airplane newPlane) {
-        takingOff.offer(newPlane);
+    // Unclear what these methods do
+    // No detailed specifications
+    public Airplane requestTakeOff() {
+        // Uses the takeOff() method to make a plane takeoff.
+        // if The landing queue is not empty it empties it first
+        // then makes a plane takeoff
+        Airplane a;
+        if (takingOff.peek() == null) return null;
+        while(true) {
+            if((a = landing.peek()) == null) {
+                return takeOff();
+            }
+        }
     }
 
     public void requestLand(Airplane newPlane) {
+        // Adds a new plane in the landing queue
         landing.offer(newPlane)
     }
 
