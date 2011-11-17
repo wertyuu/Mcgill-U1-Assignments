@@ -36,6 +36,9 @@ nav#menu a:hover {
 nav#menu a.selected {
     color: white;
 }
+nav#menu img {
+    height: 25px;
+}
 
 body {
     background-image: url('back.jpg');
@@ -52,7 +55,7 @@ body {
     height: 100%;
     margin: 0 auto;
     opacity: 0.9;
-    background-color: #025167;
+    background-color: #66B5CB;
     border-radius: 10px;
 }
 
