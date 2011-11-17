@@ -47,22 +47,25 @@ body {
 }
 
 #content {
+    position: relative;
     width: 900px;
     height: 100%;
     margin: 0 auto;
     opacity: 0.9;
     background-color: #025167;
     border-radius: 10px;
+}
+
+#login {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
     font-weight:bold;
     color:#000000;
 }
 
-#login {
-    width: 300px;
-    margin: 10px auto;
-}
-
 #register {
-    width: 400px;
+    width: 300px;
     display: none;
+    margin: 0 auto;
 }
