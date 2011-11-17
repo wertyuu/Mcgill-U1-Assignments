@@ -9,48 +9,50 @@
             <a href="http://css.mcgill.ca/~ttran3/" class="">Credits</a>
             <a href="." class="selected">Login</a>
         </nav>
+        
+        <div id="rectangle">
+            <div id="content">
+                <div id="login">
+                    <h1>Login</h1>
+                    <h2>Aren't you hungry?</h2>
+                    <form>
+                    <table border=0>
+                    <tr>
+                    <td>username:</td><td><input type=text name="u" size=20 autocorrect="off" autocapitalize="off"></td>
+                    </tr>
+                    <tr>
+                    <td>password:</td><td><input type=password name="p" size=20></td>
+                    </tr>
+                    </table>
+                    <br>
+                    <input type="button" value="login" onclick="window.location.href='functional.html'"><br />
+                    <input type="button" value="register" onclick="Javascript: showMsgs();" />
+                    </form> 
+                </div>
 
-        <div id="content">
-            <div id="login">
-                <h1>Login</h1>
-                <h2>Aren't you hungry?</h2>
-                <form>
-                <table border=0>
-                <tr>
-                <td>username:</td><td><input type=text name="u" size=20 autocorrect="off" autocapitalize="off"></td>
-                </tr>
-                <tr>
-                <td>password:</td><td><input type=password name="p" size=20></td>
-                </tr>
-                </table>
-                <br>
-                <input type="button" value="login" onclick="window.location.href='functional.html'"><br />
-                <input type="button" value="register" onclick="Javascript: showMsgs();" />
-                </form> 
+                <div id="register">
+                    <h1>Create user</h1>
+                    <table border=0>
+                    <tr>
+                    <td>username:</td><td><input type=text name="u" size=20 autocorrect="off" autocapitalize="off"></td>
+                    </tr>
+                    <tr>
+                    <td>password:</td><td><input type=password name="p" size=20></td>
+                    </tr>
+                    </table>
+                    <br>
+                    <input type="button" value="create" onclick="window.location.href='functional.html'"><br />
+                    </form> 
+                </div>
+                
+                <script type="text/javascript">
+                    function showMsgs(){
+                    document.getElementById( 'register' ).style.display = 'block';
+                    }
+                </script>
+
+
             </div>
-
-            <div id="register">
-                <h1>Create user</h1>
-                <table border=0>
-                <tr>
-                <td>username:</td><td><input type=text name="u" size=20 autocorrect="off" autocapitalize="off"></td>
-                </tr>
-                <tr>
-                <td>password:</td><td><input type=password name="p" size=20></td>
-                </tr>
-                </table>
-                <br>
-                <input type="button" value="create" onclick="window.location.href='functional.html'"><br />
-                </form> 
-            </div>
-            
-            <script type="text/javascript">
-                function showMsgs(){
-                document.getElementById( 'register' ).style.display = 'block';
-                }
-            </script>
-
-
         </div>
     </body>
 </html>

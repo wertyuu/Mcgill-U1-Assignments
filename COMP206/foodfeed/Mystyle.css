@@ -2,7 +2,7 @@ nav#menu {
     font-family: "Georgia";
     z-index: 30;
     text-align: center;
-    background: #a11c20;
+    background: #025167; /* #a11c20;*/
     font-size: 1.4em;
     display: block;
     /*padding-left: 25%;*/
@@ -35,6 +35,16 @@ nav#menu a:hover {
 }
 nav#menu a.selected {
     color: white;
+}
+
+body {
+    background-image: url('back.jpg');
+    height: 100%;
+}
+
+#content {
+    width: 900px;
+    margin: 0 auto;
 }
 
 #login {
