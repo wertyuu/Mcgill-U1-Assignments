@@ -41,11 +41,7 @@ nav#menu img {
 }
 
 body {
-    background-image: url('back2.jpg');
-    height: 100%;
-}
-
-#rectangle {
+    background-image: url('back.jpg');
     height: 100%;
 }
 
@@ -58,7 +54,7 @@ body {
     width: 900px;
     height: 100%;
     margin: 0 auto;
-    opacity: 0.8;
+    opacity: 0.9;
     background-color: #66B5CB;
     border-radius: 10px;
 }
@@ -67,14 +63,6 @@ body {
     position: relative;
     width: 300px;
     margin: 0 auto;
-    font-weight:bold;
-    color:#000000;
-}
-
-#credits {
-    position: absolute;
-    width: 450px;
-    margin: 0px 250px;
     font-weight:bold;
     color:#000000;
 }
