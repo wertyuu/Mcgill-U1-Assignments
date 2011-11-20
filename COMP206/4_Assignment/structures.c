@@ -1,3 +1,8 @@
+// Jonathan Fokkan
+// 260447938
+// Question 3
+// Assignment 4
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,12 +44,10 @@ int main(void)
         username[strlen(username)-1] = '\0';
         password[strlen(password)-1] = '\0';
         
-        //printf("%s\n%s\n%s", username, password, usertype);
         memcpy(record.username, username, strlen(username)+1);
         memcpy(record.password, password, strlen(password)+1);
         memcpy(record.usertype, usertype, strlen(usertype)+1);
         
-        //printf("%s, %s, %s\n", record.username, record.password, record.usertype);
         passwordArray[i] = record;
         i++;
     }
@@ -54,10 +57,9 @@ int main(void)
     current = &head;
     int j;
     
+    // creating the linked list by linking them in reverse order as stated in assignment
     for ( j = i-1; j >= 0 ; j-- ) {
-        printf("\n%s\n",passwordArray[j].username);
         current->user = passwordArray[j];
-        printf("%s\n",current->user.username);
         if (j == 0) {
             current->next = NULL;
             break;
@@ -65,11 +67,7 @@ int main(void)
         current->next = malloc(sizeof(PASSWORD_REC));
         current = current->next;
     }
-    //printf("%s\n", head.user.username);
-    
-    //printf("%d\n", i);
-    //printf("%s\n", passwordArray[0].username);
-    //printf("%s, %s, %s", passwordArray[0].username, passwordArray[0].password, passwordArray[0].usertype);
+
     puts("");
     puts("Contents of CSV file");
     int z;
@@ -85,24 +83,17 @@ int main(void)
 
     NODE *ncurrent;
     ncurrent = &head;
-    /*
-    printf("%s, %s, %s", ncurrent->user.username, ncurrent->user.password, ncurrent->user.usertype);
-    ncurrent = ncurrent->next;
-    printf("%s, %s, %s", ncurrent->user.username, ncurrent->user.password, ncurrent->user.usertype);
-    puts("");
-    */
 
+    puts("");
     puts("Contents of Linked List in Reverse Order");
     while ( 1 ) {
         printf("%s, %s, %s\n", ncurrent->user.username, ncurrent->user.password, ncurrent->user.usertype);
         if ( ncurrent->next == NULL ) {
-            //printf("%s, %s, %s", ncurrent->next->user.username, ncurrent->next->user.password, ncurrent->next->user.usertype);
             break;
         }
         ncurrent = ncurrent->next;
     }
 
     fclose(bank);
-
-
+    return EXIT_SUCCESS;
 }
