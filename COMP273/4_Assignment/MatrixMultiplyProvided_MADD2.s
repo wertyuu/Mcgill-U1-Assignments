@@ -27,9 +27,10 @@ MADD1:  #( float* A, float* B, float* C, int N )
         # $t0 = i
         # $t1 = j
         # $t2 = k
-        # $t3 offset of c(i,j)
+        # $t3 offset of c when storing
         # $t4 offset of a
         # $t5 offset of b
+        # $t6 offset of c when loading 
         
         # int i = 0
         li $t0, 0
@@ -53,21 +54,30 @@ AloopMADD1:
 BloopMADD1:
         bge $t2, $a3, BloopMADD1done
 
-        # c(i,j) = $f4
-        # address c(i,j) = $t3
-        # c(i,j) = c(i,j) + a(i,k) * b(k,j)
-        # a(i,k) = $f6
-        # address a(i,k) = $t4
-        mul $t4, $t0, $a3
-        add $t4, $t4, $t2
+        # load c(j,k) into $f4
+        mul $t6, $t1, $a3
+        add $t6, $t6, $t2
+        sll $t6, $t6, 2
+        add $t6, $t6, $a2
+
+        lwc1 $f4, 0($t6)
+
+
+        # c(j,k) = $f4
+        # address c(j,k) = $t3
+        # c(j,k) = c(j,k) + a(j,i) * b(i,k)
+        # a(j,i) = $f6
+        # address a(j,i) = $t4
+        mul $t4, $t1, $a3
+        add $t4, $t4, $t0
         sll $t4, $t4, 2
         add $t4, $t4, $a0
 
         lwc1 $f6, 0($t4)
 
-        # address b(k,j) = $t5
-        mul $t5, $t2, $a3
-        add $t5, $t5, $t1
+        # address b(i,k) = $t5
+        mul $t5, $t0, $a3
+        add $t5, $t5, $t2
         sll $t5, $t5, 2
         add $t5, $t5, $a1
 
@@ -77,18 +87,18 @@ BloopMADD1:
 
         add.s $f4, $f4, $f10
         
+        # load c(j,k) into memory
+        mul $t3, $t1, $a3
+        add $t3, $t3, $t2
+        sll $t3, $t3, 2
+        add $t3, $t3, $a2
+        swc1 $f4, 0($t3)
         
         # k++
         add $t2, $t2, 1
         j BloopMADD1
     
 BloopMADD1done:
-        # load c(i,j) into memory
-        mul $t3, $t0, $a3
-        add $t3, $t3, $t1
-        sll $t3, $t3, 2
-        add $t3, $t3, $a2
-        swc1 $f4, 0($t3)
 
         # j++
         add $t1, $t1, 1
