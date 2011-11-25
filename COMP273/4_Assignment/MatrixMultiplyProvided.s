@@ -8,16 +8,16 @@
 .text
 
 main:
-	la $a0,A16
-	la $a1,B16
+	la $a0,A32
+	la $a1,B32
 	la $a2,C
-	li $a3,16	# set N the matrix size
+	li $a3,32	# set N the matrix size
 	jal MADD1
 
-	la $a0,C
-	la $a1,C16
-	li $a2,16
-	jal check	# check the answer
+	#la $a0,C
+	#la $a1,C16
+	#li $a2,16
+	#jal check	# check the answer
 
 	li $v0, 10      # load exit call code 10 into $v0
         syscall         # call operating system to exit	

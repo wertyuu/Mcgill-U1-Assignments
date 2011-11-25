@@ -30,13 +30,16 @@ MADD4:  #( float* A, float* B, float* C, int N )
         # $t3 offset of c when storing
         # $t4 offset of a
         # $t5 offset of b
+        # **special note** 
+        # **MADD4 will only solve matrices of size multiple of 8**
+        # The reason is explained in the README at Q3 1.
         
         # int i = 0
         li $t0, 0
 
 
 CloopMADD4:
-        bge $t0, $a3, MADD4done
+        beq $t0, $a3, MADD4done
         
         # int j = 0
         li $t1, 0
@@ -74,7 +77,6 @@ AloopMADD4:
         lwc1 $f6, 0($t4)
 
 BloopMADD4:
-        beq $t2, $a3, BloopMADD4done
 
         # c(j,k) = $f4
         # address c(j,k) = $t3
@@ -101,7 +103,113 @@ BloopMADD4:
         
         # k++
         add $t2, $t2, 1
-        j BloopMADD4
+
+        # 2
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 3
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 4
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 5
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 6
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 7
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        # 8
+        # update address of c(j,k)
+        add $t3, $t3, 4
+        # load c(j,k) into $f4
+        lwc1 $f4, 0($t3)
+        # update address of b, b(i,k) = $f8
+        add $t5, $t5, 4
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # store c(j,k) into memory
+        swc1 $f4, 0($t3)
+        # k++
+        add $t2, $t2, 1
+
+        bne $t2, $a3, BloopMADD4
     
 BloopMADD4done:
 
@@ -138,7 +246,6 @@ cdone:	li $v0, 2       	# print float in $f12
                 
 .data
 
-zero: .float 0
 
 A:	 .space 4096     # space for 32x32 matrix (4 bytes per float) 
 B:	 .space 4096      

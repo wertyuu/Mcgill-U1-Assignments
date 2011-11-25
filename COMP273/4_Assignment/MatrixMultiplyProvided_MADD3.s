@@ -8,10 +8,10 @@
 .text
 
 main:
-	la $a0,A32
-	la $a1,B32
+	la $a0,A8
+	la $a1,B8
 	la $a2,C
-	li $a3,32	# set N the matrix size
+	li $a3,8	# set N the matrix size
 	jal MADD3
 
 	#la $a0,C
@@ -80,7 +80,6 @@ AloopMADD3:
         add $t5, $t5, $a1
 
 BloopMADD3:
-        beq $t2, $a3, BloopMADD3done
 
         # c(i,j) = $f4
         # address c(i,j) = $t3
@@ -106,7 +105,99 @@ BloopMADD3:
         
         # k++
         addi $t2, $t2, 1
-        j BloopMADD3
+
+        # 2
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+
+        # 3
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+        
+        # 4
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+
+        # 5
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+        
+        # 6
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+
+        # 7
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+
+        # 8
+        # Update a(i,k) from a(i,k-1)
+        addi $t4, $t4, 4
+        lwc1 $f6, 0($t4)
+        # address b(k,j) = $t5
+        # Update b(k,j) from b(k-1,j)
+        add $t5, $t5, $t6
+        lwc1 $f8, 0($t5)
+        mul.s $f10, $f6, $f8
+        add.s $f4, $f4, $f10
+        # k++
+        addi $t2, $t2, 1
+
+        bne $t2, $a3, BloopMADD3
     
 BloopMADD3done:
         # load c(i,j) into memory
