@@ -54,7 +54,7 @@ V   N       access  hit     miss    rate(%)    instcount
     approximation of the actual result.
 
     The frobenius norm is not exactly zero for a correct answer because of loss of precision 
-    during the multiplication or the answer put inside of C* is not precise enough.
+    during the floating point multiplication or the answer put inside of C* is not precise enough.
 
 2.
     n^2 + (2n)*(n^2) = 2n^3 + n^2
@@ -114,19 +114,25 @@ From MADD1 to MADD3
         3   8               6511(smart addresses)           28.4
         3   8               5854(BGE->BEQ)                  10.0
         3   8               5278(j->BNE)                    9.8
-        3   8               4830(partial loop unrolling)    8.4
+        3   8               5086(partial loop unrolling)    4.0
+
+        3   8               (Total)                         44.1
 
         1   16              68990
         3   16              46287(smart addresses)          32.9
         3   16              41646(BGE->BEQ)                 10.0
         3   16              37294(j->BNE)                   10.4
-        3   16              33710(partial loop unrolling)   9.6
+        3   16              35502(partial loop unrolling)   9.4
+
+        3   16              TOTAL                           48.5
 
         1   32              537838
         3   32              348559(smart addresses)         35.1
         3   32              313678(BGE->BEQ)                10.0
         3   32              279886(j->BNE)                  10.7
-        3   32              251214(partial loop unrolling)  10.2
+        3   32              264526(partial loop unrolling)  7.2
+
+        3   32              TOTAL                           50.8
 
         MADD2 to MADD4
         ---------------------------------------------------------------
@@ -136,19 +142,25 @@ From MADD1 to MADD3
         4   8               7174(smart addresses)           48.3  
         4   8               6526(BEQ)                       9.0
         4   8               5949(j->BNE)                    9.0
-        4   8               5493(partial loop unrolling)    7.7
+        4   8               5749(partial loop unrolling)    5.0
+
+        4   8               TOTAL                           58.6                   
                                                               
         2   16              108670                            
         4   16              51070(smart addresses)          53.0
         4   16              46446(BEQ)                      9.0
         4   16              42077(j->BNE)                   9.4
-        4   16              38493(Partial loop unrolling)   8.5
+        4   16              40285(Partial loop unrolling)   4.8
+
+        4   16              TOTAL                           62.9
                                                               
         2   32              860398                            
         4   32              384238(smart addresses)         55.3
         4   32              349390(BEQ)                     9.1
         4   32              315565(j->BNE)                  10.0
-        4   32              386893(partial loop unrolling)  9.0
+        4   32              300205(partial loop unrolling)  9.0
+
+        4   32              TOTAL                           60.0
 
         The change producing the most significant reduction in instruction count is uncontestably
         the smart updating of addresses. This is because it removed about 4 instruction per iteration
@@ -157,4 +169,4 @@ From MADD1 to MADD3
 
 3.
     The cache aware implementations will win even for a smaller miss penalty, 
-    since the disparity in instruction count will be smaller between the non-cache aware ones and the cache ones.
+    since the disparity in instruction count will be smaller between the non-cache aware ones and the cache aware ones.
