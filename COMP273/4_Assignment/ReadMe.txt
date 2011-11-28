@@ -82,7 +82,10 @@ V   N       access  hit     miss    rate(%)    instcount
         MADD2 will be faster if the miss penalty is greater than the time to execute 13 instructions.
 
 2.
-    The 2-way set associative cache is best for my implementation for N=16. This is because when going through
+    The 2-way set associative cache is best for my implementation for N=16, in terms of hita rate. 
+    It has the highest hit rate for N=16 and the same hit rate for the rest as the 4-way set 
+    associative cache. This is because for such small data sets the advantage of the 4-way associative cache does 
+    not manifests itself for our optimization.
 
 3.
     The smallest cache that will still allow a win for MADD2 over MADD1 
