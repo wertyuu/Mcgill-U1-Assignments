@@ -217,38 +217,214 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
         } else if ( type == ExpressionTreeNode.FUNCTION ) {
             if ( value.charAt(0) == 's' ) {
                 // d/dx sin = cos
-                ExpressionTreeNode result = deepCopy();
-                result.setValue("cos");
-                result.setLeftChild( getLeftChild().differentiate() );
-                return result;
+                if ( getLeftChild().getType() == 0 ) {
+                    if ( getLeftChild().getValue().charAt(0) == 'x' ) {
+                        ExpressionTreeNode result = deepCopy();
+                        result.setValue("cos");
+                        result.setLeftChild( getLeftChild().deepCopy() );
+                        return result;
+                    } else {
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        result.setValue("0");
+                        result.setType(0);
+                        return result;
+                    }
+                    
+                } else {
+                    // Chain Rule
+                    ExpressionTreeNode g = getLeftChild().deepCopy();
+                    ExpressionTreeNode result = new ExpressionTreeNode();
+                    result.setValue("*");
+                    result.setType(2);
+
+                    ExpressionTreeNode fg = new ExpressionTreeNode();
+                    ExpressionTreeNode sin = new ExpressionTreeNode();
+                    fg.setValue("cos");
+                    fg.setType(1);
+                    fg.setLeftChild( g );
+                    
+                    result.setRightChild(fg);
+                    result.setLeftChild( g.differentiate() );
+
+                    return result;
+                }
             } else if ( value.charAt(0) == 'c' ) {
                 // d/dx cos = -sin
-                ExpressionTreeNode result = new ExpressionTreeNode();
-                ExpressionTreeNode child = new ExpressionTreeNode();
-                ExpressionTreeNode sin = new ExpressionTreeNode();
-                result.setValue("-");
-                result.setType(2);
-                child.setValue("0");
-                child.setType(0);
-                result.setLeftChild(child);
-                sin.setValue("sin");
-                sin.setType(1);
-                sin.setLeftChild( getLeftChild().differentiate() );
-                result.setRightChild(sin);
-                return result;
+                if ( getLeftChild().getType() == ExpressionTreeNode.VALUE ) {
+                    if ( getLeftChild().getValue().charAt(0) == 'x' ) {
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        ExpressionTreeNode child = new ExpressionTreeNode();
+                        ExpressionTreeNode sin = new ExpressionTreeNode();
+                        result.setValue("-");
+                        result.setType(ExpressionTreeNode.OPERATOR);
+                        child.setValue("0");
+                        child.setType(ExpressionTreeNode.VALUE);
+                        result.setLeftChild(child);
+                        sin.setValue("sin");
+                        sin.setType(ExpressionTreeNode.FUNCTION);
+                        sin.setLeftChild( getLeftChild().deepCopy() );
+                        result.setRightChild(sin);
+                        return result;
+                        
+                    } else {
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        result.setValue("0");
+                        result.setType(0);
+                        return result;
+                    }
+                } else { // if ( getLeftChild().getType() == 1 ) {
+                    // Chain Rule
+                    ExpressionTreeNode g = getLeftChild().deepCopy();
+                    ExpressionTreeNode result = new ExpressionTreeNode();
+                    result.setValue("*");
+                    result.setType(2);
+
+                    ExpressionTreeNode fg = new ExpressionTreeNode();
+                    ExpressionTreeNode fg_child = new ExpressionTreeNode();
+                    ExpressionTreeNode sin = new ExpressionTreeNode();
+                    fg.setValue("-");
+                    fg.setType(2);
+                    fg_child.setValue("0");
+                    fg_child.setType(0);
+                    sin.setValue("sin");
+                    sin.setType(1);
+                    sin.setLeftChild( g );
+                    fg.setLeftChild( fg_child );
+                    fg.setRightChild( sin );
+                    
+                    result.setRightChild(fg);
+                    result.setLeftChild( g.differentiate());
+
+                    return result;
+                }
             } else {
                 // Only possibility is exp
-                ExpressionTreeNode result = deepCopy();
-                return result;
+                if ( getLeftChild().getType() == 0 ) {
+                    if ( getLeftChild().getValue().charAt(0) == 'x' ) {
+                        ExpressionTreeNode result = deepCopy();
+                        result.setValue("exp");
+                        result.setLeftChild( getLeftChild().deepCopy() );
+                        return result;
+                    } else {
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        result.setValue("0");
+                        result.setType(ExpressionTreeNode.VALUE);
+                        return result;
+                    }
+                    
+                } else {
+                    // Chain Rule
+                    ExpressionTreeNode g = getLeftChild().deepCopy();
+                    ExpressionTreeNode result = new ExpressionTreeNode();
+                    result.setValue("*");
+                    result.setType(2);
+
+                    ExpressionTreeNode fg = new ExpressionTreeNode();
+                    ExpressionTreeNode sin = new ExpressionTreeNode();
+                    fg.setValue("exp");
+                    fg.setType(ExpressionTreeNode.FUNCTION);
+                    fg.setLeftChild( g );
+                    
+                    result.setRightChild(fg);
+                    result.setLeftChild( g.differentiate() );
+
+                    return result;
+                }
             }
         } else { // if ( type == ExpressionTreeNode.OPERATOR ) {
             // Only possibility is an Operator
-            ExpressionTreeNode result = new ExpressionTreeNode();
-            result.setValue( getValue() );
-            result.setType(2);
-            result.setLeftChild( getLeftChild().differentiate() );
-            result.setRightChild( getRightChild().differentiate() );
-            return result;
+            if ( value.charAt(0) == '-' | value.charAt(0) == '+' ) {
+                ExpressionTreeNode result = new ExpressionTreeNode();
+                result.setValue( getValue() );
+                result.setType(2);
+                result.setLeftChild( getLeftChild().differentiate() );
+                result.setRightChild( getRightChild().differentiate() );
+                return result;
+            } else if ( value.charAt(0) == '*' ){
+                if ( getLeftChild().getType() == ExpressionTreeNode.VALUE && getRightChild().getType() == ExpressionTreeNode.VALUE ) {
+                    if ( getLeftChild().getValue().charAt(0) == 'x' && getRightChild().getValue().charAt(0) == 'x' ) {
+                        // x * x
+                        ExpressionTreeNode result = deepCopy();
+                        ExpressionTreeNode two = new ExpressionTreeNode();
+                        two.setValue("2");
+                        two.setType( ExpressionTreeNode.VALUE );
+                        
+                        result.setLeftChild( two );
+                        result.setRightChild( getLeftChild().deepCopy() );
+                        return result;
+                    } else if ( getLeftChild().getValue().charAt(0) == 'x' || getRightChild().getValue().charAt(0) == 'x' ) {
+                        if ( getLeftChild().getValue().charAt(0) == 'x' ) {
+                            ExpressionTreeNode result = getRightChild().deepCopy();
+                            return result;
+                        } else {
+                            ExpressionTreeNode result = getLeftChild().deepCopy();
+                            return result;
+                        }
+                    } else {
+                        // Only a numerical value
+                        ExpressionTreeNode result = getLeftChild().deepCopy();
+                        result.setValue("0");
+                        return result;
+                    }
+                } else {
+                    // product rule
+                    // (f*g)' = f'*g + f*g'
+                    ExpressionTreeNode result = new ExpressionTreeNode();
+                    result.setValue("+");
+                    result.setType(ExpressionTreeNode.OPERATOR);
+
+                    ExpressionTreeNode fPrimeG = new ExpressionTreeNode();
+                    fPrimeG.setValue("*");
+                    fPrimeG.setType(ExpressionTreeNode.OPERATOR);
+                    fPrimeG.setLeftChild( getLeftChild().differentiate() );
+                    fPrimeG.setRightChild( getRightChild().deepCopy() );
+
+                    ExpressionTreeNode fGPrime = new ExpressionTreeNode();
+                    fGPrime.setValue("*");
+                    fGPrime.setType(ExpressionTreeNode.OPERATOR);
+                    fGPrime.setLeftChild( getLeftChild().deepCopy() );
+                    fGPrime.setRightChild( getRightChild.differentiate() );
+                    
+                    result.setLeftChild( fPrimeG );
+                    result.setRightChild( fGPrime );
+
+                    return result;
+                }
+            } else if ( value.charAt(0) == '/' ) {
+                if ( getLeftChild().getType() == ExpressionTreeNode.VALUE && getRightChild().getType() == ExpressionTreeNode.VALUE ) {
+                    if ( getLeftChild().getValue().charAt(0) != 'x' && getRightChild().getValue().charAt(0) == 'x' ) {
+                        // d/dx 1/x = -1/x^2
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        result.setValue("-");
+                        result.setType(ExpressionTreeNode.OPERATOR);
+                        
+                        ExpressionTreeNode zero = new ExpressionTreeNode();
+                        zero.setValue("0");
+                        zero.setType(ExpressionTreeNode.VALUE);
+
+                        ExpressionTreeNode one = new ExpressionTreeNode();
+                        one.setValue("1");
+                        one.setType(ExpressionTreeNode.VALUE);
+
+                        ExpressionTreeNode x = new ExpressionTreeNode();
+                        x.setValue("x");
+                        x.setType(ExpressionTreeNode.VALUE);
+
+                        result.setLeftChild( zero );
+                        result.setRightChild( one.divide( x.multiply(x) ) );
+
+                        return result;
+
+                        
+                    } else if ( getLeftChild().getValue().charAt(0) == 'x' && getRightChild().getValue().charAt(0) != 'x' ) {
+                        ExpressionTreeNode result = getLeftChild().differentiate().divide( getRightChild().deepCopy() );
+                        return result;
+                    }
+                } else {
+                    // Quotient Rule
+                    d/dx
+                }
+            }
         }
     }
  
@@ -259,6 +435,27 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
             ExpressionTreeNode result = new ExpressionTreeNode();
             result.setType(2);
             result.setValue("+");
+            result.setLeftChild(child1);
+            result.setRightChild(child2);
+            return result;
+	}
+
+	public ExpressionTreeNode divide (ExpressionTreeNode t) throws ExpressionTreeNodeException {
+            ExpressionTreeNode child1 = t.deepCopy();
+            ExpressionTreeNode child2 = deepCopy();
+            ExpressionTreeNode result = new ExpressionTreeNode();
+            result.setType(ExpressionTreeNode.OPERATOR);
+            result.setValue("/");
+            result.setLeftChild(child1);
+            result.setRightChild(child2);
+            return result;
+	}
+	public ExpressionTreeNode multiply (ExpressionTreeNode t) throws ExpressionTreeNodeException {
+            ExpressionTreeNode child1 = t.deepCopy();
+            ExpressionTreeNode child2 = deepCopy();
+            ExpressionTreeNode result = new ExpressionTreeNode();
+            result.setType(ExpressionTreeNode.OPERATOR);
+            result.setValue("*");
             result.setLeftChild(child1);
             result.setRightChild(child2);
             return result;
