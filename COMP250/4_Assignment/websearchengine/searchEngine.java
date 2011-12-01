@@ -30,8 +30,53 @@ public class searchEngine {
 	// and the set of visited vertices.
 	
 	void traverseInternet(String url) throws Exception {
-		/* WRITE SOME CODE HERE */
 
+                if ( !htmlParsing.queriedURL_content.containsKey( url ) ) {
+                        // Do the whole set visited stuff **LATER**
+                        //internet.setVisited(url);
+                        LinkedList<String> wordsInPage = htmlParsing.getContent( url );
+                        /*
+                        System.out.println("Here be the URL: " + url);
+                        System.out.println("\nHere be words");
+                        System.out.println(wordsInPage);
+                        */
+                        for ( String word : wordsInPage ) {
+                                // add the url to the word index with key word if it already 
+                                // exists. Otherwise create a new LinkedList to store the 
+                                // url
+                                if ( wordIndex.containsKey( word ) ) {
+                                        // The url is added to the url LinkedList only
+                                        // if it is not already in it
+                                        LinkedList<String> urlList = (LinkedList<String>)wordIndex.get( word );
+                                        if ( !urlList.contains( url ) ) {
+                                            urlList.add( url );
+                                        }
+                                } else {
+                                        LinkedList<String> urlsWithWord = new LinkedList<String>();
+                                        urlsWithWord.addLast(url);
+                                        wordIndex.put( word, urlsWithWord );
+                                }
+                        }
+                }
+                
+                // Traverse &
+                // Build the directed graph
+                if ( !htmlParsing.queriedURL_links.containsKey( url ) ) {
+                        LinkedList<String> links = htmlParsing.getLinks( url );
+                        /*
+                         * for debug purposes
+                        System.out.println("\nHere are links: ");
+                        System.out.println(links);
+                        */
+                        // add the current url to directed graph
+                        internet.addVertex(url);
+                        for ( String nextUrl : links ) {
+                                // Add edge connecting the current vertex to the next
+                                internet.addEdge( url, nextUrl );
+                                this.traverseInternet( nextUrl );
+                        }
+                }
+                return;
 	} // end of traverseInternet
 
 
@@ -46,8 +91,32 @@ public class searchEngine {
 	   This method will probably fit in about 30 lines.
 	   */
 	void computePageRanks() {
-		/* WRITE YOUR CODE HERE */
-		
+                /* WRITE YOUR CODE HERE */
+                // set everything to 1.0 first 
+                for ( String vertex : (LinkedList<String>)internet.getVertices() ) {
+                        internet.setPageRank( vertex, 1.0 );
+                }
+
+                // repeat 100 iterations
+                for ( int i = 0; i < 100; i++ ) {
+                        // for each vertex v do PR(v) = (1 - d) + ( d * ( PR(w1)/C(w1) + ... + PR(wn)/C(wn) ) ) 
+                        // let d = 0.5
+
+                        for ( String vertex : (LinkedList<String>)internet.getVertices() ) {
+                            
+                                double sumOfPR = 0;
+                                for ( String vertex2 : (LinkedList<String>)internet.getEdgesInto( vertex )) {
+                                        sumOfPR += internet.getPageRank( vertex2 ) / internet.getOutDegree( vertex2 );
+                                }
+
+                                double pageRankV = (1 - DAMPING_FACTOR) + DAMPING_FACTOR * sumOfPR;
+
+                                internet.setPageRank( vertex, pageRankV);
+
+                        }
+                }
+                return;
+                
 	} // end of computePageRanks
 		
 
@@ -61,8 +130,18 @@ public class searchEngine {
 	   This method should take about 25 lines of code.
 	*/
 	String getBestURL(String query) {
-		/* WRITE YOUR CODE HERE */
-	    return "";
+                String bestSite = "";
+                double bestRank = 0;
+                if ( wordIndex.containsKey(query) ){
+                        // Finds the site with max PageRank from the ones containing the query
+                        for ( String current : (LinkedList<String>)wordIndex.get(query) ) {
+                                if ( internet.getPageRank(current) > bestRank ) {
+                                    bestRank = internet.getPageRank(current);
+                                    bestSite = current;
+                                }
+                        }
+                }
+                return bestSite;
 	} // end of getBestURL
 	
 
@@ -70,7 +149,7 @@ public class searchEngine {
 	public static void main(String args[]) throws Exception{		
 		searchEngine google = new searchEngine();
 		// to debug your program, start with.
-	       google.traverseInternet("http://www.mcb.mcgill.ca/~blanchem/250/a.html");
+	       google.traverseInternet("http://www.cs.mcgill.ca/~dprecup/courses/IntroCS/Assignments/hw4PageRank/a.html");
 
 	       // When your program is working on the small example, move on to
 	       //  google.traverseInternet("http://www.mcb.mcgill.ca");
