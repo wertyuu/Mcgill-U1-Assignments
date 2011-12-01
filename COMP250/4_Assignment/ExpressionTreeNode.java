@@ -333,7 +333,7 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
             }
         } else { // if ( type == ExpressionTreeNode.OPERATOR ) {
             // Only possibility is an Operator
-            if ( value.charAt(0) == '-' | value.charAt(0) == '+' ) {
+            if ( value.charAt(0) == '-' || value.charAt(0) == '+' ) {
                 ExpressionTreeNode result = new ExpressionTreeNode();
                 result.setValue( getValue() );
                 result.setType(2);
@@ -383,14 +383,15 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                     fGPrime.setValue("*");
                     fGPrime.setType(ExpressionTreeNode.OPERATOR);
                     fGPrime.setLeftChild( getLeftChild().deepCopy() );
-                    fGPrime.setRightChild( getRightChild.differentiate() );
+                    fGPrime.setRightChild( getRightChild().differentiate() );
                     
                     result.setLeftChild( fPrimeG );
                     result.setRightChild( fGPrime );
 
                     return result;
                 }
-            } else if ( value.charAt(0) == '/' ) {
+            } else {    //if ( value.charAt(0) == '/' ) {
+                // Only Possibility left division '/'
                 if ( getLeftChild().getType() == ExpressionTreeNode.VALUE && getRightChild().getType() == ExpressionTreeNode.VALUE ) {
                     if ( getLeftChild().getValue().charAt(0) != 'x' && getRightChild().getValue().charAt(0) == 'x' ) {
                         // d/dx 1/x = -1/x^2
@@ -422,10 +423,17 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                     }
                 } else {
                     // Quotient Rule
-                    d/dx
+                    // d/dx g(x)/h(x) = ( hg' - h'g ) / (h^2)
+
+                    ExpressionTreeNode hGPrime = getRightChild().deepCopy().multiply( getLeftChild().differentiate() );
+                    ExpressionTreeNode hPrimeG = getRightChild().differentiate().multiply( getLeftChild().deepCopy() );
+                    ExpressionTreeNode substraction = hGPrime.sub(hPrimeG);
+                    ExpressionTreeNode result = substraction.divide( getLeftChild().multiply( getLeftChild() ) );
+                    return result;
                 }
             }
         }
+        return null;    // Dead code
     }
  
 	public ExpressionTreeNode add (ExpressionTreeNode t) throws ExpressionTreeNodeException {
@@ -440,9 +448,19 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
             return result;
 	}
 
+	public ExpressionTreeNode sub (ExpressionTreeNode t) throws ExpressionTreeNodeException {
+            ExpressionTreeNode child1 = deepCopy();
+            ExpressionTreeNode child2 = t.deepCopy();
+            ExpressionTreeNode result = new ExpressionTreeNode();
+            result.setType(2);
+            result.setValue("-");
+            result.setLeftChild(child1);
+            result.setRightChild(child2);
+            return result;
+	}
 	public ExpressionTreeNode divide (ExpressionTreeNode t) throws ExpressionTreeNodeException {
-            ExpressionTreeNode child1 = t.deepCopy();
-            ExpressionTreeNode child2 = deepCopy();
+            ExpressionTreeNode child1 = deepCopy();
+            ExpressionTreeNode child2 = t.deepCopy();
             ExpressionTreeNode result = new ExpressionTreeNode();
             result.setType(ExpressionTreeNode.OPERATOR);
             result.setValue("/");
@@ -467,6 +485,7 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
 		String s;
 		s ="((x)+(4))*(cos(x))";		
                 String sss = "((2)-(sin(x)))*(exp(x)+(6))"; 
+                String ssss = "(cos(sin(x)))";
 		ExpressionTreeNode n = new ExpressionTreeNode(s);		
 		System.out.println(n.toString());
 		ExpressionTreeNode nn = new ExpressionTreeNode("(x)");
@@ -481,8 +500,15 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                 System.out.println(nnnn.evaluate(0));
 
                 System.out.println(n.differentiate().toString());
-		
-                System.out.println(nn.differentiate().toString());
+                
+                ExpressionTreeNode nnnnn = new ExpressionTreeNode(ssss);
+                System.out.println(nnnnn.toString());
+                System.out.println(nnnnn.differentiate().toString());
+                
+                String sssss = "((((x)*(x))*(2))-(sin((x)*(2))))";
+                ExpressionTreeNode nnnnnn = new ExpressionTreeNode(sssss);
+                System.out.println(nnnnnn.toString());
+                System.out.println(nnnnnn.differentiate().toString());
 	}
 
 }
