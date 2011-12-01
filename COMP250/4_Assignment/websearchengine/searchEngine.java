@@ -31,15 +31,9 @@ public class searchEngine {
 	
 	void traverseInternet(String url) throws Exception {
 
-                if ( !htmlParsing.queriedURL_content.containsKey( url ) ) {
-                        // Do the whole set visited stuff **LATER**
-                        //internet.setVisited(url);
+                if ( !internet.getVisited( url ) ) {
+                        internet.setVisited(url,true);
                         LinkedList<String> wordsInPage = htmlParsing.getContent( url );
-                        /*
-                        System.out.println("Here be the URL: " + url);
-                        System.out.println("\nHere be words");
-                        System.out.println(wordsInPage);
-                        */
                         for ( String word : wordsInPage ) {
                                 // add the url to the word index with key word if it already 
                                 // exists. Otherwise create a new LinkedList to store the 
@@ -57,17 +51,10 @@ public class searchEngine {
                                         wordIndex.put( word, urlsWithWord );
                                 }
                         }
-                }
-                
                 // Traverse &
                 // Build the directed graph
-                if ( !htmlParsing.queriedURL_links.containsKey( url ) ) {
+                //if ( !htmlParsing.queriedURL_links.containsKey( url ) ) {
                         LinkedList<String> links = htmlParsing.getLinks( url );
-                        /*
-                         * for debug purposes
-                        System.out.println("\nHere are links: ");
-                        System.out.println(links);
-                        */
                         // add the current url to directed graph
                         internet.addVertex(url);
                         for ( String nextUrl : links ) {
@@ -149,10 +136,10 @@ public class searchEngine {
 	public static void main(String args[]) throws Exception{		
 		searchEngine google = new searchEngine();
 		// to debug your program, start with.
-	       google.traverseInternet("http://www.cs.mcgill.ca/~dprecup/courses/IntroCS/Assignments/hw4PageRank/a.html");
+	       //google.traverseInternet("http://www.cs.mcgill.ca/~dprecup/courses/IntroCS/Assignments/hw4PageRank/a.html");
 
 	       // When your program is working on the small example, move on to
-	       //  google.traverseInternet("http://www.mcb.mcgill.ca");
+	         google.traverseInternet("http://www.mcb.mcgill.ca");
 	       
 		// this is just for debugging purposes
 		System.out.println(google);
