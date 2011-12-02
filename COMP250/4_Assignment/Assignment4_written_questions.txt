@@ -1,0 +1,117 @@
+Jonathan Fokkan
+260447938
+COMP 250
+Assignment 4
+30/11/2011
+
+1. Heaps
+    (a)
+        inserting 2
+            1
+           / \
+          2   3
+         / \ / \
+        6  4 5  10
+       / \ /
+      9 13 8
+
+    (b)
+        removeMin() from the original field
+            3
+           / \
+          4   5
+         / \ / \
+        6  8 13 10
+       /
+      9
+
+2. General trees
+    (a)
+        For n = 2
+        D(a) = 1
+        n*(n-1)/2 = 1   Holds
+
+        For n = 3
+        D(a) = 3 or 2
+        n*(n-1)/2 = 3   Holds
+
+        The maximum D(a) for any n is the sum 1+2+...+(n-1).
+        This is because to achieve the maximum, each edge should be reused
+        from d(a, x) for d(a, y) where x is the a node and y is the next
+        node in the sum.
+
+        Claim: 1+2+...+(n-1) = n*(n-1)/2
+        Base case:
+        n = 2
+        1 = 2*1/2   True
+
+        Induction Step:
+        let 1+2+...+(n-1) = n*(n-1)/2 hold for n-1.
+
+        for n
+
+        1+2+...+(n-1)+n = n*(n-1)/2 + n     By the induction hypothesis
+                        = n*(n-1)/2 + 2n/2
+                        = (n+1)*n/2
+        Therefore, this shows that for any tree and any node, D(a) <= n(n-1)/2
+
+    (b)
+        For any n there exist a tree for which equility is achieved in D(a) <= n(n-1)/2
+
+        This tree is the tree for the maximum D(a), where the node a is chained to the
+        other nodes and each node is connected to 2 other nodes except the leaves/ends.
+        examples of such trees are:
+
+                b                           c
+               / \                         / \
+              a   c                       b   d
+                   \                     /     \
+                    d                   a       e
+                     \                           \
+                      e                           f
+        For any n, such a tree can be obtained by connecting every node
+        to a node which is connected to at most 1 other node. This will
+        then give 2 nodes which are connected to only 1 other node.
+
+    (c)
+        
+3. Combinations
+    (a)
+        2nCn <4^n
+        
+        Base Case:
+            For n = 1
+            2C1 = 2
+            4^1 = 4
+            True
+
+        Induction Step:
+            Assume 2nCn < 4^n, holds for up to n
+
+            2(n+1)C(n+1) < 4^n+1
+
+            2(n+1)Cn+1 = (2n+2)!/(n+1)!(n+1)!
+                       = (2n)!/n!n!* (2n+2* ( 2n+1 ) )/(n+1)*(n+1)
+                       = (2n)!/n!n! * ( 4 - 2/(n+1) )
+
+            4^(n+1) = 4^n * 4
+
+            4 - 2/(n+1) < 4
+
+            By the induction hypothesis:
+            2(n+1)C(n+1) < 4^n+1
+
+            Therefore 
+            2nCn < 4^n holds
+    (b)
+        nCk = (n-1)Ck + (n-1)C(k-1)
+
+6. Graph Search
+
+    (a)
+        E->D->F
+         ->A->C
+         ->B
+
+    (b)
+        E->A->D->C->B->F
