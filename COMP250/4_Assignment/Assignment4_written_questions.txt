@@ -53,7 +53,17 @@ Assignment 4
         1+2+...+(n-1)+n = n*(n-1)/2 + n     By the induction hypothesis
                         = n*(n-1)/2 + 2n/2
                         = (n+1)*n/2
-        Therefore, this shows that for any tree and any node, D(a) <= n(n-1)/2
+        Therefore, this shows that for any tree and any node, D(a) is at
+        most n(n-1)/2. For any other case from the maximum, the sum will
+        always be smaller. This is because only in the maximum case can 
+        there be (n-1) edges to the node furthest from node a.
+
+        D(a) will be a sum 1+x1+x2+...+xn-1
+        where xi < n-1 edges
+
+        such a sum will never be greater than n*(n-1)/2.
+
+        D(a) <= n*(n-1)/2   , holds for any n and any tree.
 
     (b)
         For any n there exist a tree for which equility is achieved in D(a) <= n(n-1)/2
