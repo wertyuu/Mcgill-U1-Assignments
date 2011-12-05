@@ -116,6 +116,18 @@ Assignment 4
     (b)
         nCk = (n-1)Ck + (n-1)C(k-1)
 
+        nCk = n! / [ k! (n - k)! ]
+
+            = (n - 1)Ck + (n - 1)C(k - 1)
+            = (n - 1)! / [k! (n - k - 1)!] + (n - 1)! / [(k - 1)! * (n - k)!]
+            = (n - 1)! * (n - k) / [k! * (n - k)!] + (n - 1)! * k /[k! * (n - k)!]
+            = (n - 1)! * (n - k + k) / [k! * (n - k)!]
+            = n! / [ k! (n - k)! ]
+
+        Therefore 
+        nCk = (n-1)Ck + (n-1)C(k-1)
+
+
 6. Graph Search
 
     (a)

@@ -509,6 +509,11 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                 ExpressionTreeNode nnnnnn = new ExpressionTreeNode(sssss);
                 System.out.println(nnnnnn.toString());
                 System.out.println(nnnnnn.differentiate().toString());
+
+                String S = "(4)*(sin((2)*(x)))";
+                ExpressionTreeNode N = new ExpressionTreeNode(S);
+                System.out.println(N.toString());
+                System.out.println(N.differentiate().toString());
 	}
 
 }
