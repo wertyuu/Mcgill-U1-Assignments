@@ -139,7 +139,7 @@ public class searchEngine {
 	       //google.traverseInternet("http://www.cs.mcgill.ca/~dprecup/courses/IntroCS/Assignments/hw4PageRank/a.html");
 
 	       // When your program is working on the small example, move on to
-	         google.traverseInternet("http://www.mcb.mcgill.ca");
+	         google.traverseInternet("http://www.cs.mcgill.ca");
 	       
 		// this is just for debugging purposes
 		System.out.println(google);
