@@ -420,6 +420,11 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                     } else if ( getLeftChild().getValue().charAt(0) == 'x' && getRightChild().getValue().charAt(0) != 'x' ) {
                         ExpressionTreeNode result = getLeftChild().differentiate().divide( getRightChild().deepCopy() );
                         return result;
+                    } else {
+                        ExpressionTreeNode result = new ExpressionTreeNode();
+                        result.setValue("0");
+                        result.setType(ExpressionTreeNode.VALUE);
+                        return result;
                     }
                 } else {
                     // Quotient Rule
@@ -433,7 +438,6 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                 }
             }
         }
-        return null;    // Dead code
     }
  
 	public ExpressionTreeNode add (ExpressionTreeNode t) throws ExpressionTreeNodeException {
@@ -482,6 +486,7 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
 	
 	
 	public static void main(String[] args) throws ExpressionTreeNodeException {
+                /*
 		String s;
 		s ="((x)+(4))*(cos(x))";		
                 String sss = "((2)-(sin(x)))*(exp(x)+(6))"; 
@@ -514,6 +519,15 @@ public double evaluate(double x) throws ExpressionTreeNodeException {
                 ExpressionTreeNode N = new ExpressionTreeNode(S);
                 System.out.println(N.toString());
                 System.out.println(N.differentiate().toString());
+                */
+
+                String s1 = "((cos((exp((2)*(x)))-(1)))+(((sin(x))+(1))/(2)))";
+                String s2 = "((cos(x))-(((2)/(3))*(3)))";
+                ExpressionTreeNode n1 = new ExpressionTreeNode(s1);
+                ExpressionTreeNode n2 = new ExpressionTreeNode(s2);
+                ExpressionTreeNode n3 = n1.add(n2);
+                System.out.println(n3.evaluate(0));
+                System.out.println(n3.differentiate().toString());
 	}
 
 }
