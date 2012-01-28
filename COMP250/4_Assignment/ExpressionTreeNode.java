@@ -1,3 +1,8 @@
+/*
+ * Jonathan FOkkan
+ * 260447938
+ * */
+
 import java.lang.Math.*;
 
 public class ExpressionTreeNode {
